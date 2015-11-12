@@ -1,27 +1,31 @@
 //Written for Uno
+//TODO: Remove excess logging (debug) code.
+//TODO: Address in-line TODO's :p
+//TODO: Allow steering trim in the future my making SteeringNeutral R/W (EEPROM req'd?)
+
 #include <XBOXRECV.h>
 #include <SoftwareSerial.h>
 
 //Xbox Wireless Receiver Vars
 USB Usb; //Init USB controller
-XBOXRECV controller(&Usb); //Attach controller to Usb by passing a pointer reference
-const byte MasterController = 0; //Define which controller can control the arduino. Default to controller #1 (0).
+XBOXRECV controller(&Usb); //Attach controller to 'Usb' by passing a pointer ref
+const byte MasterController = 0; //Define which controller can control the Arduino. Default to controller #1 (0).
 const short analogLeftStickDeadzonePos = 7000;
 const short analogLeftStickDeadzoneNeg = -7000;
 
 //Power Vars
-const byte DrivePWMPin = 6;  //The pin that will send the drive motor(s) PWM signal
-const byte DriveDirectionPin = 5; //The pin that will be set as digital to control forward or reverse drive motor direction. HIGH = REV, LOW = FWD
+const byte DrivePWMPin = 6;  //Pin that will send the drive motor(s) PWM signal
+const byte DriveDirectionPin = 5; //Pin that will be set as digital to control forward or reverse drive motor direction. HIGH = REV, LOW = FWD
 boolean directionForward = true;
 
 //Steering Vars
 const short SteeringMaxLeft = 2960;  //Tested left turn maximum 'target' value for linear actuator position via Jrk
 const short SteeringMaxRight = 1900;  //Tested right turn maximum 'target' value for linear actuator position via Jrk
-const short SteeringNeutral = 2370;  //Measured neutral steering position. TODO: Allow trimming in the future (EEPROM)
+const short SteeringNeutral = 2370;  //Measured neutral steering position. 
 short SteeringMotorPosition;  //Holds the value for current/desrired steering 'target'
 
 //Pololu Jrk Serial Coms Vars
-const byte UARTDetect = 170; //tells Pololu Jrk to auto-dtect URART speed and serves as the 'command byte'
+const byte UARTDetect = 170; //Tells Pololu Jrk to auto-detect UART speed and serves as the 'command byte'
 const byte MotorOFF = 255; //Turns off the motor
 const byte MotorCmd_SetTargetHighRes = 192; //Command to move the motor. MUST READ: https://www.pololu.com/docs/0J38/4.e
 const byte MotorCmd_Low5 = 31; //0x1F - Bitwise & with target value to get the lower 5 bits to put with MotorCmd_SetTargetHighRes
@@ -30,7 +34,7 @@ const byte MotorCmd_High7 = 127; //0x7f - Bitwise & with target value to get upp
 //const byte JRKDeviceNumber = 11; //Jrk controller device number (Default is 11: https://www.pololu.com/docs/0J38/4.c)
 
 //SoftwareSerial Vars
-SoftwareSerial JrkSerial(2, 3); //Define a software serial connection for the Jrk with Rx on 2, Tx on 3.
+SoftwareSerial JrkSerial(2, 3); //Defines a software serial connection for the Jrk with Rx on pin 2, Tx on pin 3.
 
 //Misc Vars
 boolean controlActive = false; //When false, no remote functions will work. Toggled via start button on controller.
@@ -58,11 +62,12 @@ void setup()
 
 //FUNCTIONS
 
-//METHODS
-//Sets default values for vehicle params and controller params
+//METHODS (technically just more functions... but ones that return no values)
+
+//Sets up controller LEDs and 
 void SetVehicleAndControllerDefaults()
 {  
-  //If false then the steering should be centered and power to wheels should be zero. Controller lights flash.
+  //If controller isn't connected (controlActive == false) then steering should be centered and power to wheels should be zero. Controller lights flash.
   if (controlActive == false)
   {
     controller.setLedMode(ROTATING, MasterController);
@@ -70,22 +75,24 @@ void SetVehicleAndControllerDefaults()
     SetDriveMotorPowerLevel(0);
   }
   else
-  {//Set controller lights solid for master controller position
+  {//Set controller lights. Top left of X ring is on for FWD, bottom left is on for REV.
     if (directionForward == true)
     {
       controller.setLedOn(LED1, MasterController);
     }
     else
     {
-      controller.setLedOn(LED3, MasterController);
+      controller.setLedOn(LED3, MasterController);	  
     }
+	
+	SetDriveDirection(directionForward);
   }
 }
 
 //Sets the power level for the drive motors. 0-255 == Off - Full Power.
 void SetDriveMotorPowerLevel(byte PowerLevel)
 {
-  if (PowerLevel > 0) //Only log ot serial if a non-zero value is set. Could help with debugging analog inputs that don't zero out correctly?
+  if (PowerLevel > 0) //Only log to serial if a non-zero value is set. Could help with debugging analog inputs that don't zero out correctly?
   {
     Serial.print("Drive Motor Power: ");
     Serial.println(PowerLevel);
@@ -142,10 +149,19 @@ void DisableSteering()
   JrkSerial.write(MotorOFF);
 }
 
+//Set defaults if the remote Rx disconnects. Functionally, a "Dead man's switch"
+//Confirmed working with battery pull.
+//TODO: Test natural out-of-range result.
+void Deadman()
+{
+  controlActive = false;
+  SetVehicleAndControllerDefaults(); //Set defaults if the controller disconnects or isn't connected
+}
+
 //MAIN
 void loop() 
 {
-  Usb.Task(); //Blocks until something happens on USB or 5s, whichever comes first (I think)
+  Usb.Task(); //Blocks until something happens on USB or 5s, whichever comes first (I think??)
 
   if (controller.XboxReceiverConnected) 
   {
@@ -170,25 +186,24 @@ void loop()
          SetDriveMotorPowerLevel(0); 
         }
 
-        //Steer the jeep!
+        //Steer the vehicle!
         SetSteeringPosition(controller.getAnalogHat(LeftHatX,MasterController));
         
         if (controller.getButtonClick(UP, MasterController)) 
         {
-          controller.setLedOn(LED1, MasterController); //Light LED1 for forward
           Serial.println(F("Up"));
           directionForward = true;
-          SetDriveDirection(directionForward);
+          SetVehicleAndControllerDefaults();
         }
         
         if (controller.getButtonClick(DOWN, MasterController)) 
         {
-          controller.setLedOn(LED3, MasterController);
           Serial.println(F("Down"));
           directionForward = false;
-          SetDriveDirection(directionForward);
+          SetVehicleAndControllerDefaults();
         }
         
+		//TODO: Use these for something. Perhaps trim mode?
         if (controller.getButtonClick(BACK,MasterController)) 
         {
           //controller.setLedBlink(ALL,MasterController);
@@ -209,13 +224,11 @@ void loop()
     } //controller[MasterController] connected
     else
     {
-      controlActive = false;
-      SetVehicleAndControllerDefaults(); //Ensure things are disabled if the controller disconnects or isn't connected
+      Deadman(); //Set defaults if the controller disconnects or isn't connected
     }
   } //if xbox RX connected
   else
   {
-    controlActive = false;
-    SetVehicleAndControllerDefaults(); //Ensure things are disabled if the remote Rx disconnects
+    Deadman(); //Set defaults if the remote Rx disconnects.
   }
-} //main
+} //end loop
