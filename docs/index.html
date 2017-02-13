@@ -36,7 +36,8 @@
     </div>
     <div class="container">
         <h2>What is it Made Of?</h2>
-        The jeep is made of parts I mainly already owned. An Xbox 360 remote and USB receiver? Check! An Arduino Uno? Check! Everything else came from Princess Auto, RobotShop.ca, or DX.com.
+        The jeep is made of parts I mainly already owned. An Xbox 360 remote and USB receiver? Check! An Arduino Uno? Check! Everything else came from Princess Auto, RobotShop.ca, or DX.com.<br/>
+        I also threaded the ends of the axles so that I could put on some proper nylock nuts.
         <h4>Parts Breakdown:</h4>
         <dl>
             <dt>Aruino Uno</dt>
@@ -57,23 +58,54 @@
             <dd>Motor controller for stock brushed motors. The controller was cheap, had multiple interfaces for control, and was 100% solid state. It's been working very well.<br/>
                 Source: RobotShop.ca
             </dd>
-            <dt>Part</dt>
-            <dd>Description of part</dd>
-            <dt>Part</dt>
-            <dd>Description of part</dd>
-            <dt>Part</dt>
-            <dd>Description of part</dd>
+            <dt>Rubber Tires</dt>
+            <dd>10" tires meant for lawn &amp; garden applications<br/>
+                Source: Princess Auto
+            </dd>
+            <dt>Flexible PVC Drain &amp; Trap Connector: 1&frac12;" - 1&frac14;"</dt>
+            <dd>Couples Power Wheels greabox to wheels<br/>
+                Source: Home Depot
+            </dd>
+            <dt>Misc. Swivel Connectors</dt>
+            <dd>Attaches the linear actuator arm to the steering bar. A small hole was drilled in the steering bar.<br/>
+                Source: Princess Auto
+            </dd>
+            <dt>Plumbing Strapping</dt>
+            <dd>Attaches the linear actuator to the Jeep. A bolt is also used.<br/>
+                Source: Home Depot
+            </dd>
+            <dt>Misc. Wiring Harnesses</dt>
+            <dd>Connects things like linear actuator, motor controls, etc. Picked based on wire count.<br/>
+                Source: Princess Auto
+            </dd>
+            <dt>12V Automtive Relay &amp; Harness</dt>
+            <dd>Connects the battery to the electronics via a small switch on the back of the Jeep.<br/>
+                Source: Princess Auto
+            </dd>
         </dl>
     </div>
     <div class="container">
         <h2>How Do the Controls Work?</h2>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis libero sapien, fringilla a mattis eu, ultrices eu eros. Curabitur at porttitor diam, a convallis dui. Nulla eget egestas justo, at feugiat dui. 
+        The controls are pretty simple. Early on I identified two main goals:
+        <ol>
+            <li>I wanted to ensure it would be hard to quickly switch between forward and reverse to prevent wear on the plastic gearboxes.</li>
+            <li>I wanted to have a 'deadman' switch on it. Meaning that if the remote disconnected for any reason all power to the motors would be cut.</li>
+        </ol>
+        So, with those goals in mind I configured the 360 controller to work like this:
+        <ul>
+            <li>The system starts in 'search' mode and the Xbox button must be pressed to pair contoller and receiver.</li>
+            <li>Once paired, the player 1 light is lit indicating a pairing and forward is selected as the drive direction.</li>
+            <li>If the d-pad is pressed up or down the player 1 and player 3 lights will toggle to indicate forward or reverse drive direction. The vechicle must not be receiving a drive speed command to toggle drive direction.</li>
+            <li>Pulling the right trigger will enable movement in the direction set. Movement is scaled to the analog input (light pull - slow, full pull - max speed)</li>
+            <li>Moving the left analog stick along the x-y axis values to steer the jeep.</li> 
+            <li>Pressing the Xbox button, removing the batteries, or going out of range will trigger the deadman switch (code) and put the receiver back into search mode.</li>
+        </ul>
     </div>
     <div class="container">
         <h2>Image Gallery</h2>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis libero sapien, fringilla a mattis eu, ultrices eu eros. Curabitur at porttitor diam, a convallis dui. Nulla eget egestas justo, at feugiat dui. 
+        Here's a collection of images that give a little more insight into how the whole thing is put together.
     </div>
-    <!--
+    
     <div class="container">
         <h2>Slideshow</h2>
         <div id="imgSlideshow" class="carousel slide" data-ride="carousel">
@@ -85,22 +117,20 @@
             </ol>
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
+                    <img src="img/jeep.jpg" alt="The RC Jeep">
                     <div class="first-slide">
                         <div class="container">
                             <div class="carousel-caption">
-                                <h1>Test H1</h1>
-                                <p>Test text</p>
+                                <h3>The RC Jeep</h3>
+                                <p>This is the RC Jeep as seen driving around the neighborhood</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis libero sapien, fringilla a mattis eu, ultrices eu eros. Curabitur at porttitor diam, a convallis dui. Nulla eget egestas justo, at feugiat dui. 
     </div>
-    -->
-    <!--<img class="img-thumnail" src="img/jeep.jpg" style="height:50px; width=50px"/>-->
+
     <div class="container">
         <footer>
             <hr>
