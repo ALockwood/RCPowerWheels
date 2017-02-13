@@ -72,7 +72,7 @@
             </dd>
             <dt>Plumbing Strapping</dt>
             <dd>Attaches the linear actuator to the Jeep. A bolt is also used.<br/>
-                Source: Home Depot
+                Source: On Hand (Home Depot)
             </dd>
             <dt>Misc. Wiring Harnesses</dt>
             <dd>Connects things like linear actuator, motor controls, etc. Picked based on wire count.<br/>
@@ -81,6 +81,10 @@
             <dt>12V Automtive Relay &amp; Harness</dt>
             <dd>Connects the battery to the electronics via a small switch on the back of the Jeep.<br/>
                 Source: Princess Auto
+            </dd>
+            <dt>12V AGM Battery</dt>
+            <dd>The battery is a sealed AGM 12V battery from <a href="http://www.canadiantire.ca/en/pdp/motomaster-nautilus-battery-pack-800-a-0111592p.html"> an old battery pack.</a><br/>
+                Source: On Hand (Canadian Tire)
             </dd>
         </dl>
     </div>
@@ -113,17 +117,21 @@
                 <li data-target="#imgSlideshow" data-slide-to="1" class=""></li>
                 <li data-target="#imgSlideshow" data-slide-to="2" class=""></li>
                 <li data-target="#imgSlideshow" data-slide-to="3" class=""></li>
+                <li data-target="#imgSlideshow" data-slide-to="4" class=""></li>
+                <li data-target="#imgSlideshow" data-slide-to="5" class=""></li>
+                <li data-target="#imgSlideshow" data-slide-to="6" class=""></li>
+                <li data-target="#imgSlideshow" data-slide-to="7" class=""></li>
+                <li data-target="#imgSlideshow" data-slide-to="8" class=""></li>
+                <li data-target="#imgSlideshow" data-slide-to="9" class=""></li>
+                <li data-target="#imgSlideshow" data-slide-to="10" class=""></li>
             </ol>
             
-            <div class="carousel-inner" role="listbox">
-                
+            <div class="carousel-inner" role="listbox">             
                 <div class="item active">
                     <img src="img/jeep.jpg" alt="The RC Jeep">
-                    <div class="item active">
-                        <div class="carousel-caption">
-                            <h3>The RC Jeep</h3>
-                            <p>This is the RC Jeep as seen driving around the neighborhood</p>
-                        </div>
+                    <div class="carousel-caption">
+                        <h3>The RC Jeep</h3>
+                        <p>This is the RC Jeep as seen driving around the neighborhood</p>
                     </div>
                 </div>
                 <div class="item">
@@ -133,17 +141,87 @@
                         <p>Close up of how the wheel attaches to the gearbox with the PVC plumbing coupler.</p>
                     </div>
                 </div>
-            
-            
-            
+                <div class="item">
+                    <img src="img/linear_actuator.jpg" alt="Linear Actuator Frame Attachment">
+                    <div class="carousel-caption">
+                        <h3>Linear Actuator Frame Attachment</h3>
+                        <p>How the linear actuator is attached to the frame of the Jeep. (Not Seen: The bolt through the linear actuator mount)</p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="img/linear_actuator_attachment.jpg" alt="Linear Actuator Steering Attachment">
+                    <div class="carousel-caption">
+                        <h3>Linear Actuator Steering Attachment</h3>
+                        <p>Shows how the linear actuator is attached to the steering bar of the Jeep. It seems janky but works great!</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/on_off.jpg" alt="Power Switch">
+                    <div class="carousel-caption">
+                        <h3>Power Switch</h3>
+                        <p>From my junk bin. Simply toggles the relay to provide/kill power to the electronics.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/batt_relay.jpg" alt="Battery &amp; Relay">
+                    <div class="carousel-caption">
+                        <h3>Battery &amp; Relay</h3>
+                        <p>Provides power to electronics and drive motors. I'm pretty sure I also wired in a diode to avoid flyback.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/under_hood.jpg" alt="Underhood">
+                    <div class="carousel-caption">
+                        <h3>Under The Hood</h3>
+                        <p>My freebie solution of housing all the electronics in old screw containers is seen.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/uno.jpg" alt="Arduino">
+                    <div class="carousel-caption">
+                        <h3>Arduino Uno and USB Shield</h3>
+                        <p>Just what the title says. This is what runs the code you can download here.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/motor_drivers.jpg" alt="Motor Drivers">
+                    <div class="carousel-caption">
+                        <h3>DC Motor Driver &amp; Linear Actuator Controller</h3>
+                        <p>The motor driver is the large black PCB and the linear actuator controller is the tiny one mounted on the side.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/wiring.jpg" alt="Wiring">
+                    <div class="carousel-caption">
+                        <h3>Linear Actuator Wiring</h3>
+                        <p>Simple off the shelf harness used to connect the controller and linear actuator.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/wiring-2.jpg" alt="More Wiring">
+                    <div class="carousel-caption">
+                        <h3>Controller Connections</h3>
+                        <p>All the connections that need to be made between the Uno and the motor controllers are here. 12 gauge wire is used between the battery, motor controller, and motors.</p>
+                    </div>
+                </div>
             </div>
+             
+            <a class="left carousel-control" href="#imgSlideshow" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <!--<span class="sr-only">Previous</span>-->
+            </a>
+            <a class="right carousel-control" href="#imgSlideshow" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <!--<span class="sr-only">Next</span>-->
+            </a>
         </div>
     </div>
 
     <div class="container">
         <footer>
             <hr>
-            <p> 2016, Andrew Lockwood</p>
+            <p> 2017, Andrew Lockwood</p>
         </footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 

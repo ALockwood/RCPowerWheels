@@ -8,3 +8,11 @@
     bottom: 0; left: 0;
     margin: auto;
 }
+
+.carousel-control.right, .carousel-control.left {
+  background-image:none;
+}
+
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
